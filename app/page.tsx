@@ -1,9 +1,9 @@
 'use client'
 
-import axios from "axios"
 import React, { useState, useRef } from "react"
 import { FaFilePdf } from 'react-icons/fa';
-import Head from 'next/head'; // Import Head dari Next.js untuk SEO
+import Head from 'next/head';
+import { action } from "@/action";
 
 export default function Home() {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -24,14 +24,9 @@ export default function Home() {
     formData.append("file", selectedFile);
 
     try {
-      const response = await axios.post(`${process.env.API}/summarize`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        responseType: 'blob'
-      });
+      const response = await action(formData);
 
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const url = window.URL.createObjectURL(new Blob([response]));
       
       const link = document.createElement('a');
       link.href = url;
