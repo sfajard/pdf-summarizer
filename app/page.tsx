@@ -24,7 +24,7 @@ export default function Home() {
     formData.append("file", selectedFile);
 
     try {
-      const response = await axios.post("http://localhost:8000/summarize", formData, {
+      const response = await axios.post(`${process.env.API}/summarize`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
